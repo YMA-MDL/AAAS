@@ -7,9 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "documentation": "apidoc -i api/routes/ -o api/apidoc/",
-    "start": "node app.js",
-    "test": "mocha --timeout 10000"
+    "start": "node app.js"
   },
   "keywords": [
     "API"
