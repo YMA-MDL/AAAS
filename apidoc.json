@@ -1,0 +1,15 @@
+{
+    "name": "Activities API Documentation",
+    "version": "0.1.0",
+    "description": "Activities API",
+    "url": "",
+    "order": [
+        "Error",
+        "Define",
+        "PostTitleAndError",
+        "PostError"
+      ],
+    "template": {
+        "forceLanguage":"en"
+    }
+}

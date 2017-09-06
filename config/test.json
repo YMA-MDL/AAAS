@@ -1,0 +1,4 @@
+{
+    "DBHost": "mongodb://localhost/",
+    "DBinstance": "activitiesAPI_test"
+}

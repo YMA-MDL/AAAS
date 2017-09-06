@@ -1,0 +1,4 @@
+{
+    "DBHost": "mongodb://node:uston7193@ds127854.mlab.com:27854/",
+    "DBinstance": "aaas"
+}
