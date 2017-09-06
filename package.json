@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "description": "Activities As A Service",
   "main": "app.js",
-  "directories": {
-    "test": "test"
-  },
   "scripts": {
     "start": "node app.js"
+  },
+  "directories": {
+    "test": "test"
   },
   "keywords": [
     "API"

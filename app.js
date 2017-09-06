@@ -68,7 +68,7 @@ app.use((req, res, next) => {
 })
 
 // start the server
-const port = app.get('port') || 3000
+var port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Server is listening on port ${port}`))
 
 module.exports = app; // for testing
