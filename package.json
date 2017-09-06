@@ -8,7 +8,7 @@
   },
   "scripts": {
     "documentation": "apidoc -i api/routes/ -o api/apidoc/",
-    "start": "SET NODE_ENV=prod && node app.js",
+    "start": "node app.js",
     "test": "mocha --timeout 10000"
   },
   "keywords": [
