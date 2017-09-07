@@ -4,7 +4,8 @@
   "description": "Activities As A Service",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "postInstall": "apidoc -i api/routes/ -o api/apidoc/"
   },
   "directories": {
     "test": "test"
