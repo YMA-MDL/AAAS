@@ -4,7 +4,7 @@
   "description": "Activities As A Service",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "SET NODE_ENV=dev&apidoc -i api/routes/ -o api/apidoc/&node app.js",
     "postInstall": "apidoc -i api/routes/ -o api/apidoc/"
   },
   "directories": {
