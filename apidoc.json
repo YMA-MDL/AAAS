@@ -3,6 +3,7 @@
     "version": "0.1.0",
     "description": "Activities API",
     "url": "",
+    "sampleUrl": "http://localhost:3000",
     "order": [
         "Error",
         "Define",

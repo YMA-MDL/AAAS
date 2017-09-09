@@ -4,7 +4,7 @@
   "description": "Activities As A Service",
   "main": "app.js",
   "scripts": {
-    "start": "SET NODE_ENV=dev&apidoc -i api/routes/ -o api/apidoc/&node app.js",
+    "start": "SET NODE_ENV=dev&apidoc -i api/routes/ -o api/apidoc/&nodemon app.js",
     "postInstall": "apidoc -i api/routes/ -o api/apidoc/"
   },
   "directories": {
@@ -25,7 +25,6 @@
     "config": "^1.20.1",
     "express": "^4.15.4",
     "express-promise-router": "^2.0.0",
-    "jade": "^1.11.0",
     "joi": "^10.6.0",
     "jsonwebtoken": "^7.4.3",
     "jwt-simple": "^0.5.1",

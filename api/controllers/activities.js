@@ -95,6 +95,7 @@ module.exports = {
     },
     newActivities: (req, res, next) => {
         console.log("called controller function newActivities")
+        res.status(200)
     },
     updateActivity: (req, res, next) => {
         console.log("called controller function updateActivity")
@@ -115,6 +116,7 @@ module.exports = {
     },
     updateActivities: (req, res, next) => {
         console.log("called controller function updateActivities")
+        res.status(200)
     },
     deleteActivity: (req, res, next) => {
         console.log("called controller function deleteActivity")

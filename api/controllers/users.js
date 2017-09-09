@@ -30,10 +30,9 @@ hashPassword = password => {
 
 module.exports = {
     getUser: (req, res, next) => {
-        const uid = req.params.id
-        User.findOne({ uid })
+        const id = req.params.id
+        User.findOne({ _id:id })
             .then(user => {
-                delete user.password
                 res.status(200).json(user)
             })
             .catch(err => {
@@ -43,7 +42,6 @@ module.exports = {
     getUsers: (req, res, next) => {
         User.find()
             .then(users => {
-
                 var usersCleaned  = users
                 res.status(200).json(users)
             })

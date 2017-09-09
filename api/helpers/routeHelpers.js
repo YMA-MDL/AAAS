@@ -19,6 +19,7 @@ module.exports = {
         }),
         activitySchema : Joi.object().keys({
             title: Joi.string().required(),
+            description: Joi.string(),
             progress: Joi.number(),
             targetDate: {
                 start: Joi.date(),
