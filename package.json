@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "SET NODE_ENV=dev&apidoc -i api/routes/ -o api/apidoc/&gulp copy-apidoc-fix&node app.js",
-    "preInstall": "apidoc -i api/routes/ -o api/apidoc/"
+    "preInstall": "apidoc -i api/routes/ -o api/apidoc/&gulp copy-apidoc-fix"
   },
   "directories": {
     "test": "test"
@@ -35,12 +35,12 @@
     "nodemon": "^1.11.0",
     "passport": "^0.4.0",
     "passport-jwt": "^3.0.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "gulp": "^3.9.1",
   },
   "devDependencies": {
     "chai": "^3.5.0",
     "chai-http": "^2.0.1",
-    "gulp": "^3.9.1",
     "mocha": "^2.4.5"
   }
 }
