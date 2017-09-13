@@ -27,7 +27,6 @@ app.get('/', function (req, res) {
 
 // Routes definition
 const users = require('./api/routes/users')
-const activities = require('./api/routes/activities')
 
 // middleware
 if (config.util.getEnv('NODE_ENV') !== 'test') {
@@ -43,7 +42,6 @@ app.use('/api/help/doc', express.static('api/apidoc'));
 
 // Routes usage
 app.use('/api/users', users)
-app.use('/api/activities', activities)
 
 // catch 404
 app.use((req, res, next) => {
