@@ -6,7 +6,7 @@
   "scripts": {
     "start": "SET NODE_ENV=dev&apidoc -i api/routes/ -o api/apidoc/&gulp copy-apidoc-fix&node app.js",
     "preInstall": "apidoc -i api/routes/ -o api/apidoc/&gulp copy-apidoc-fix",
-    "heroku-postbuild":"gulp copy-apidoc-fix"
+    "heroku-postbuild": "gulp copy-apidoc-fix"
   },
   "directories": {
     "test": "test"
@@ -20,28 +20,28 @@
   "author": "YM",
   "license": "MIT",
   "dependencies": {
-    "apidoc": "^0.17.6",
+    "apidoc": "^0.17.7",
     "bcrypt": "^1.0.2",
     "body-parser": "^1.17.2",
     "config": "^1.20.1",
     "express": "^4.15.4",
     "express-promise-router": "^2.0.0",
+    "gulp": "^4.0.0",
     "joi": "^10.6.0",
-    "jsonwebtoken": "^7.4.3",
+    "jsonwebtoken": "^8.4.0",
     "jwt-simple": "^0.5.1",
     "lodash": "^4.17.4",
-    "moment": "^2.18.1",
-    "mongoose": "^4.11.7",
+    "moment": "^2.23.0",
+    "mongoose": "^5.4.4",
     "morgan": "^1.8.2",
-    "nodemon": "^1.11.0",
+    "nodemon": "^1.18.9",
     "passport": "^0.4.0",
-    "passport-jwt": "^3.0.0",
-    "passport-local": "^1.0.0",
-    "gulp": "^3.9.1"
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "chai-http": "^2.0.1",
-    "mocha": "^2.4.5"
+    "chai-http": "^4.2.1",
+    "mocha": "^5.2.0"
   }
 }
