@@ -77,10 +77,10 @@ describe('Activities', () => {
         /*
       * Test the /POST route
       */
-      describe('/POST activity', () => {
+      describe('/POST user', () => {
         it('it should Retrieve the created activity', (done) => {
             chai.request(server)
-                .post('/api/activities')
+                .post('/api/users')
                 .set({'authorization': auth})
                 .send({
                     "title": "this is my nth comment with 3 dependencies",
@@ -105,10 +105,10 @@ describe('Activities', () => {
     /*
       * Test the /GET route
       */
-      describe('/GET activity', () => {
-        it('it should GET all the activities', (done) => {
+      describe('/GET user', () => {
+        it('it should GET all the users', (done) => {
             chai.request(server)
-                .get('/api/activities')
+                .get('/api/users')
                 .set({'authorization': auth})
                 .end((err, res) => {
                     res.should.have.status(200);
