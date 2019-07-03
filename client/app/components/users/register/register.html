@@ -1,0 +1,42 @@
+<div id="login" style="  display: flex;
+-ms-flex-align: center;
+align-items: center;
+padding-top: 40px;
+padding-bottom: 40px;
+background-color: #f5f5f5;height: 100vh;">
+  <style>
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+  </style>
+  <form class="form-signin" ng-submit="submit(newUser);" autocomplete="off">
+    <h1 class="h3 mb-3 font-weight-normal">Register</h1>
+
+    <label for="inputEmail" class="sr-only">Email address</label>
+    <input ng-model="newUser.email" autocomplete="off" type="email" id="inputEmail" class="form-control"
+      placeholder="Email address" required autofocus>
+    <label for="inputUserName" class="sr-only">User Name</label>
+    <input ng-model="newUser.username" autocomplete="new-username" type="text" id="inputUserName" class="form-control"
+      placeholder="User Name" required>
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input ng-model="newUser.password" autocomplete="new-password" type="password" id="inputPassword"
+      class="form-control" placeholder="Password" required>
+    <label for="inputPasswordConfirm" class="sr-only">Confirm Password</label>
+    <input autocomplete="new-confirmpassword" type="password" id="inputPasswordConfirm" class="form-control"
+      placeholder="Confirm Password" required match='{{[newUser.password]}}' ng-model='confirm'>
+
+    <a href="login">already have an account? sign-in !</a>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+  </form>
+</div>

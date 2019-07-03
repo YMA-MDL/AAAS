@@ -1,0 +1,238 @@
+<div id="specification">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light ">
+    <a class="navbar-brand" href="#"> <img src="images/openrequirements.svg" width="30" height="30"
+        class="d-inline-block align-top" alt=""> openrequirements <span class="badge badge-info">Beta</span></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="btn btn-outline-primary" href="/app"><i class="far fa-arrow-alt-circle-left"></i> <span
+              class="btnText firstRetract">Back</span><span class="sr-only">(current)</span></a>
+          <button class="btn btn-outline-info" ng-click="togglePeoplePanel();$event.stopPropagation();"><i
+              class="fas fa-user-friends"></i> <span class="btnText firstRetract">People</span><span
+              class="sr-only">(current)</span></button>
+        </li>
+      </ul>
+      <a class="navbar-brand docTitle">
+        <h3><span class="badge badge-pill badge-info"> {{specification.ref}}</span>
+        </h3>
+      </a>
+
+      <button class="btn btn-outline-secondary  mr-sm-2" title="Leave" type="button" ng-click="logout();">
+        <i class="fas fa-sign-out-alt"></i> <span class="btnText">Logout</span>
+      </button>
+      <form class="form-inline">
+        <button class="btn btn-outline-secondary  mr-sm-2" title="History" ng-show="false" type="button"
+          ng-click="toggleGitGraph();$event.stopPropagation();">
+          <i class="fas fa-history"></i> <span class="btnText">History</span>
+        </button>
+      </form>
+    </div>
+  </nav>
+  <div class="col-12" style="text-align: center; margin-top: 100px;" ng-show="docLoading">
+    <div class="lds-roller">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+  <nav ng-show="!docLoading">
+    <div class="nav nav-tabs" id="nav-tab" role="tablist" style="  margin-top: 10px;">
+      <a class="nav-item nav-link active" data-toggle="tab" href="" ng-click='selectedTab="editor"' role="tab"
+        aria-controls="nav-editor" aria-selected="true">Editor</a>
+      <a class="nav-item nav-link " data-toggle="tab" href="" ng-click='selectedTab="pbs"' role="tab"
+        aria-controls="nav-pbs" aria-selected="true">Product Breakdown Structure</a>
+      <a class="nav-item nav-link " data-toggle="tab" href="" ng-click='selectedTab="requirements"' role="tab"
+        aria-controls="nav-home" aria-selected="true">Requirements List</a>
+      <a class="nav-item nav-link " data-toggle="tab" href="" ng-click='selectedTab="tests"' role="tab"
+        aria-controls="nav-home" aria-selected="true">Tests</a>
+      <a class="nav-item nav-link " data-toggle="tab" href="" ng-click='selectedTab="tests"' role="tab"
+        aria-controls="nav-home" aria-selected="true">Compliance Matrix</a>
+    </div>
+
+  </nav>
+  <div class="tab-content" id="nav-tabContent" ng-show="!docLoading">
+    <div class="tab-pane fade " ng-class="{'show': selectedTab=='editor','active':selectedTab=='editor'}"
+      role="tabpanel" aria-labelledby="nav-editor-tab" id="editorPanel">
+
+      <div class="col-12 contentEditor">
+        <!-- CENTER PANEL-->
+        <div class="page editable" id="codex-editor" ng-bind-html="fileContent">
+
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane fade" ng-class="{'show': selectedTab=='pbs','active':selectedTab=='pbs'}" role="tabpanel"
+      aria-labelledby="nav-pbs-tab">
+
+      <div class="col-12 contentEditor">
+        <!-- CENTER PANEL-->
+      </div>
+    </div>
+
+    <div class="tab-pane fade" ng-class="{'show': selectedTab=='requirements','active':selectedTab=='requirements'}"
+      role="tabpanel" aria-labelledby="nav-home-tab">
+
+      <div class="col-12 contentEditor">
+        <!-- CENTER PANEL-->
+
+
+        <table class="table table-hover table-sm " rzTable>
+          <thead class="thead-light">
+            <tr>
+              <th></th>
+              <th>Status</th>
+              <th>Ref</th>
+              <th>Tags</th>
+              <th>Title</th>
+              <th>Type</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody as-sortable="sortableOptions" ng-model="requirements">
+            <tr ng-repeat="requirement in requirements" as-sortable-item context-menu="menuOptions">
+              <td class="actions">
+                <span class="badge badge-primary sortingBadge" as-sortable-item-handle><i
+                    class="fas fa-ellipsis-v"></i></span>
+              </td>
+              <td class="status" ng-if="editable">
+                <div class="dropdown">
+                  <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{requirement.status}}
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" ng-repeat='status in requirementStatus'
+                      ng-click='updateRequirementStatus(requirement,status,$index)'>{{status}}</a>
+                  </div>
+                </div>
+              </td>
+              <td class="status" ng-if="!editable">
+                <h5><span class="badge badge-secondary">{{requirement.status}}</span></h5>
+              </td>
+              <td>{{requirement.ref}}</td>
+              <td>
+                <tags-input ng-model="requirement.tags" class="reqTags"
+                  on-tag-added="updateRequirement(requirement,$index);"
+                  on-tag-removed="updateRequirement(requirement,$index);"></tags-input>
+              </td>
+
+              <td medium-editor ng-model="requirement.title" ng-change="updateRequirement(requirement,$index)"
+                ng-model-options="{updateOn: 'blur'}">
+                {{requirement.title}}</td>
+              <td class="type" ng-if="editable">
+                <div class="dropdown">
+                  <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{requirement.type}}
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" ng-repeat='type in requirementTypes'
+                      ng-click='updateRequirementType(requirement,type,$index)'>{{type}}</a>
+                  </div>
+                </div>
+              </td>
+
+              <td class="type" ng-if="!editable">
+                <h5><span class="badge badge-secondary">{{requirement.type}}</span></h5>
+              </td>
+              <td medium-editor ng-model="requirement.description" ng-change="updateRequirement(requirement)"
+                ng-model-options="{updateOn: 'blur'}">
+                {{requirement.description}}</td>
+            </tr>
+            <tr>
+              <td colspan="7">
+                <button ng-click="addRequirement(requirements.length)" type="button"
+                  class="btn btn-block btn-success"><i class="far fa-plus-square"></i></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="tab-pane fade" ng-class="{'show': selectedTab=='tests','active':selectedTab=='tests'}" role="tabpanel"
+      aria-labelledby="nav-tests-tab">
+
+      <div class="col-12 contentEditor">
+        <!-- CENTER PANEL-->
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <!-- LIST USERs : [CONTRIBUTORS/READERS]-->
+  <nav class="cbp-spmenu cbp-spmenu-horizontal cbp-spmenu-top" click-outside="closePeoplePanel();"
+    ng-class='{"cbp-spmenu-open":peoplePanelOpen}' id="cbp-spmenu-s3">
+    <h3><i class="fas fa-user-friends"></i></h3>
+    <div class="row" style="overflow-x: auto;white-space: nowrap; height: 100%;">
+
+      <div style="width: 170px; display:inline-block; margin: 5px;font-size:small;"
+        ng-repeat="contributor in specification.contributors">
+        <div class="thumbnail  bg-info text-white"
+          style="border: 3px solid #333; height: 100%; text-align: center;  border-radius: 8px;">
+          <img ng-src="{{contributor.user.pict}}" check-image src="images/userLogo.png"
+            style="object-fit: cover; height: 96px; width: 96px; border-radius: 5px;" alt="..."
+            ng-if="contributor.user">
+          <img src="images/whoLogo.png" style="margin-top: 10px;" alt="..." ng-if="!contributor.user">
+          <div class="caption">
+            <b class="notclickable ">Contributor</b>
+            <p userId="{{contributor.user._id}}" ng-if="contributor">{{contributor.email}}
+              <span class="glyphicon glyphicon-refresh actionnableGlyphicon" aria-hidden="true"
+                ng-click="openLCItemAccessModal(contributor.role)"></span> <span
+                class="glyphicon glyphicon-trash actionnableGlyphicon" aria-hidden="true"
+                ng-click="removeLCRoleAssignee(contributor)"></span>
+            </p>
+
+          </div>
+        </div>
+      </div>
+      <div style="width: 170px; display:inline-block; height: 100%;font-size:small;"
+        ng-repeat="reader in specification.readers">
+        <div class="thumbnail bg-info text-white"
+          style="border: 3px solid #333;height: 100%;     border-radius: 8px; text-align: center;">
+          <img ng-src="{{reader.user.pict}}" check-image src="images/userLogo.png"
+            style="object-fit: cover; height: 96px; width: 96px; border-radius: 5px;" alt="..." ng-if="reader.user">
+          <img src="images/whoLogo.png" style="margin-top: 10px;" alt="..." ng-if="!reader.user">
+          <div class="caption">
+            <b class="notclickable ">{{reader.role}}</b>
+            <p userId="{{reader.user._id}}" ng-if="reader.user">{{reader.user._labelRef}}
+              <span class="glyphicon glyphicon-refresh actionnableGlyphicon" aria-hidden="true"
+                ng-click="openLCItemAccessModal(reader.role)"></span> <span
+                class="glyphicon glyphicon-trash actionnableGlyphicon" aria-hidden="true"
+                ng-click="removeLCRoleAssignee(reader)"></span>
+            </p>
+            <p userId="{{reader.user._id}}" ng-if="!reader.user" class="clickable"
+              ng-click="openLCItemAccessModal(reader.role)">{{ 'default.node.select' | translate }}</p>
+          </div>
+        </div>
+      </div>
+      <div style="width: 170px; display:inline-block; margin: 5px;font-size:small;">
+        <div ng-click="openItemAccessModal()" class="thumbnail clickable"
+          style="border: 3px dotted #5cb85c;text-align: center; background-color:#CEE5CE;height: 100%; border-radius: 8px;">
+          <img src="images/addUser.png" style="margin-top: 10px;" alt="...">
+          <div class="caption">
+            <b class="notclickable ">Invite Someone</b>
+            <p class="notclickable "></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <nav class="cbp-spmenu cbp-spmenu-horizontal cbp-spmenu-bottom" click-outside="closeGitGraph();"
+    ng-class='{"cbp-spmenu-open":graphPanelOpen}' id="cbp-spmenu-s4">
+    <h3><i class="fas fa-history"></i> </h3>
+    <div id="graph-container"></div>
+  </nav>
+
+</div>

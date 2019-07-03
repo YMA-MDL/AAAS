@@ -4,28 +4,38 @@ const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 var path = require("path")
 const config = require('config'); //we load the db location from the JSON files
+
 const options = {
-    server: { socketOptions: { keepAlive: 1, connectTimeoutMS: 30000 } },
-    replset: { socketOptions: { keepAlive: 1, connectTimeoutMS: 30000 } }
+    keepAlive: 1,
+    connectTimeoutMS: 30000,
+    useNewUrlParser: true
 };
 
+// DATABASE INIT
 
 mongoose.Promise = global.Promise
-
+mongoose.set('useCreateIndex', true);
 mongoose.connect(config.DBHost + config.DBinstance, options)
+mongoose.connection.on('error', function (error) {
+    console.error('Database connection error:', error);
+});
 
+mongoose.connection.once('open', function () {
+    console.log('Database connected');
+});
+
+// SERVER LAUNCH
 
 const app = express()
 
-// set the rendering machine for the public website
-// app.set('view engine', 'jade');
 
-app.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname + '/public/index.html'));
+// Routes definition
+
+app.get('/app/:page', function (req, res) {
+    res.sendFile(path.join(__dirname + '/client/index.html'));
 });
 
 
-// Routes definition
 const users = require('./api/routes/users')
 const activities = require('./api/routes/activities')
 
@@ -39,7 +49,17 @@ app.use(bodyParser.json())
 
 // serve static documentation
 app.use(express.static('public'));
+app.use('/app', express.static('client'));
+app.use('/app', express.static('node_modules'));
 app.use('/api/help/doc', express.static('api/apidoc'));
+
+app.all('*', function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
+    res.header("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+    next();
+});
 
 // Routes usage
 app.use('/api/users', users)
